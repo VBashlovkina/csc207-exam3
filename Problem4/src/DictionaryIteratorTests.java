@@ -71,7 +71,7 @@ public class DictionaryIteratorTests
     // intentionally some duplicate first letters.
     String[] words =
         { "aardvark", "anteater", "antelope", "bear", "bison", "buffalo",
-         "chinchilla", "cat", "dingo", "elpehant", "eel", "flying squirrel",
+         "chinchilla", "cat", "dingo", "elephant", "eel", "flying squirrel",
          "fox", "goat", "gnu", "goose", "hippo", "horse", "iguana",
          "jackalope", "kestrel", "llama", "moose", "mongoose", "nilgai",
          "orangutan", "opossum", "platapus", "red fox", "snake", "tarantula", 
@@ -101,7 +101,7 @@ public class DictionaryIteratorTests
           {
             String value = words[rand.nextInt(words.length)];
             char key = value.charAt(0);
-            operation = "add(" + key + "," + value + ")";
+            operation = "add(" + key + "," + value + ")\n";
             ops.add(operation);
             dict.set(key, value);
             map.put(key, value);

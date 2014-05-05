@@ -1,6 +1,7 @@
 import java.io.PrintWriter;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Random;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Random;
  * @author Your Name Here
  */
 public class OpenHashTable<K, V>
-    implements Dictionary<K,V>, Iterable<V>
+    implements Dictionary<K, V>, Iterable<V>
 {
   // +-------+-----------------------------------------------------------
   // | Notes |
@@ -156,7 +157,8 @@ public class OpenHashTable<K, V>
       {
         throw new Exception("Invalid key: " + key);
       } // if (pair == null)
-    else // if (pair != null)
+    else
+      // if (pair != null)
       {
         return pair.value;
       } // if (pair != null)
@@ -208,7 +210,8 @@ public class OpenHashTable<K, V>
         ++this.size;
         this.pairs[index] = new KVPair(key, value);
       } // if (this.pairs[index] == null)
-    else // if (this.pairs[index] != null)
+    else
+      // if (this.pairs[index] != null)
       {
         this.get(index).value = value;
       } // if (this.pairs[index] != null)
@@ -225,6 +228,7 @@ public class OpenHashTable<K, V>
   {
     return new Iterator<V>()
       {
+
         public boolean hasNext()
         {
           // STUB
@@ -252,18 +256,66 @@ public class OpenHashTable<K, V>
   {
     return new Iterator<K>()
       {
+        // +--------+----------------------------------------------------------
+        // | Fields |
+        // +--------+
+
+        /**
+         * Current position of the iterator
+         */
+        int index = 0;
+
+        /**
+         * Number of iterations made so far
+         */
+        int numOfIterations = 0;
+
+        // +---------+----------------------------------------------------------
+        // | Methods |
+        // +---------+    
+
+        /**
+         * Determine whether there are any more elements to iterate
+         * 
+         * @pre none
+         * @post this doesn't change its position
+         * @return true if there are elements that weren't iterated yet
+         * @return false otherwise
+         */
         public boolean hasNext()
         {
-          // STUB
-          return false;
+          return numOfIterations < size;
         } // hasNext()
 
+        /**
+         * Return the next element in the table and move the iterator
+         * 
+         * @pre 0 <= this.index <= OpenHashTable.this.capacity
+         * @post this.index++
+         * @return the key of the next element
+         * @throw NoSuchElementException
+         *      if this.hasNext == false, there is no next element 
+         */
         public K next()
+          throws NoSuchElementException
         {
-          // STUB
-          return null;
+          if (this.hasNext())
+            {
+              K key;
+              while ((key = ((KVPair) OpenHashTable.this.pairs[index]).key) == null)
+                {
+                  index++;
+                }// while the current element in the array is empty
+              this.numOfIterations++;
+              return key;
+            }// if there is a next element
+          else
+            throw new NoSuchElementException();
         } // next()
 
+        /**
+         * Remove method is not supported
+         */
         public void remove()
           throws UnsupportedOperationException
         {
@@ -333,7 +385,8 @@ public class OpenHashTable<K, V>
     // there's always some free space in the table, this loop is
     // guaranteed to terminate.
 
-    int index = Math.abs(key.hashCode() % this.pairs.length);;
+    int index = Math.abs(key.hashCode() % this.pairs.length);
+    ;
     while ((pairs[index] != null) && (!key.equals(this.get(index).key)))
       {
         index = (index + PROBE_OFFSET) % this.pairs.length;
@@ -350,7 +403,6 @@ public class OpenHashTable<K, V>
   {
     return (KVPair) pairs[i];
   } // get (int)
-    
 
   // +---------------+---------------------------------------------------
   // | Inner Classes |

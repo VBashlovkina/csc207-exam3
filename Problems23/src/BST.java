@@ -9,7 +9,7 @@ import java.util.Stack;
  * Dictionaries implemented as binary search trees.
  * 
  * @author Samuel A. Rebelsky
- * @author Your Name Here
+ * @author Vasilisa Bashlovkina
  */
 public class BST<K, V>
     implements Dictionary<K, V>
@@ -364,10 +364,10 @@ public class BST<K, V>
 
     public BSTNodeIterator(BSTNode root)
     {
-      remaining = new Stack<BSTNode>();
+      this.remaining = new Stack<BSTNode>();
       if (root != null)
         {
-          remaining.push(root);
+          this.remaining.push(root);
         } // if (root != null)
     } // BSTNodeIterator(BSTNode)
 

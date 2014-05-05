@@ -101,7 +101,7 @@ public class DictionaryIteratorTests
           {
             String value = words[rand.nextInt(words.length)];
             char key = value.charAt(0);
-            operation = "add(" + key + "," + value + ")\n";
+            operation = "add(" + key + "," + value + ")";
             ops.add(operation);
             dict.set(key, value);
             map.put(key, value);

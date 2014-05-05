@@ -458,10 +458,9 @@ public class OpenHashTable<K, V>
           if (this.hasNext())
             {
               KVPair pair;
-              while ((pair = (KVPair) OpenHashTable.this.pairs[index]) == null)
-                {
-                  index++;
-                }// while the current element in the array is empty
+              // While the current element in the array is empty, move
+              while ((pair = (KVPair) OpenHashTable.this.pairs[index++]) == null);
+              // Completed an iteration, increment counter
               this.numOfIterations++;
               return pair;
             }// if there is a next element

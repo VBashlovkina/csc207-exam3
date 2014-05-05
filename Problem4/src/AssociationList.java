@@ -5,7 +5,6 @@ import java.util.Iterator;
  * Dictionaries implemented as linked structures.  
  *
  * @author Samuel A. Rebelsky
- * @author Your Name Here
  */
 public class AssociationList<K, V>
     implements Dictionary<K, V>

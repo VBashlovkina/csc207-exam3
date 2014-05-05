@@ -408,7 +408,7 @@ public class OpenHashTable<K, V>
   } // find(K)
 
   /**
-   * Get an iterator for the pairs
+   * Get an iterator for the KVpairs
    */
   public Iterator<KVPair> pairsIterator()
   {

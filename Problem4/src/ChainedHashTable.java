@@ -1,6 +1,7 @@
 import java.io.PrintWriter;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Random;
 
 /**
@@ -206,23 +207,55 @@ public class ChainedHashTable<K, V>
   {
     return new Iterator<V>()
       {
+        // +--------+----------------------------------------------------------
+        // | Fields |
+        // +--------+
+        /**
+         * The actual iterator doing all the work
+         */
+        Iterator<AssociationList<K, V>> pairsIt = ChainedHashTable.this.bucketIterator();
+
+        // +---------+----------------------------------------------------------
+        // | Methods |
+        // +---------+    
+
+        /**
+         * Determine whether there are any more elements to iterate
+         * 
+         * @pre none
+         * @post this doesn't change its position
+         * @return true if there are elements that weren't iterated yet
+         * @return false otherwise
+         */
         public boolean hasNext()
         {
-          // STUB
-          return false;
+          return this.pairsIt.hasNext();
         } // hasNext()
 
+        /**
+         * Return the next element in the table and move the iterator
+         * 
+         * @pre none
+         * @post the position of this is incremented
+         * @return the key of the next element
+         * @throw NoSuchElementException
+         *      if this.hasNext == false, there is no next element 
+         */
         public V next()
+          throws NoSuchElementException
         {
-          // STUB
-          return null;
+          return this.pairsIt.next().front.next.value;
         } // next()
 
+        /**
+         * Remove method is not supported
+         */
         public void remove()
           throws UnsupportedOperationException
         {
           throw new UnsupportedOperationException();
         } // remove()
+        
       }; // new Iterator<V>
   } // iterator()
 
@@ -233,23 +266,55 @@ public class ChainedHashTable<K, V>
   {
     return new Iterator<K>()
       {
+        // +--------+----------------------------------------------------------
+        // | Fields |
+        // +--------+
+        /**
+         * The actual iterator doing all the work
+         */
+        Iterator<AssociationList<K, V>> pairsIt = ChainedHashTable.this.bucketIterator();
+
+        // +---------+----------------------------------------------------------
+        // | Methods |
+        // +---------+    
+
+        /**
+         * Determine whether there are any more elements to iterate
+         * 
+         * @pre none
+         * @post this doesn't change its position
+         * @return true if there are elements that weren't iterated yet
+         * @return false otherwise
+         */
         public boolean hasNext()
         {
-          // STUB
-          return false;
+          return this.pairsIt.hasNext();
         } // hasNext()
 
+        /**
+         * Return the next element in the table and move the iterator
+         * 
+         * @pre none
+         * @post the position of this is incremented
+         * @return the key of the next element
+         * @throw NoSuchElementException
+         *      if this.hasNext == false, there is no next element 
+         */
         public K next()
+          throws NoSuchElementException
         {
-          // STUB
-          return null;
+          return this.pairsIt.next().front.next.key;
         } // next()
 
+        /**
+         * Remove method is not supported
+         */
         public void remove()
           throws UnsupportedOperationException
         {
           throw new UnsupportedOperationException();
         } // remove()
+        
       }; // new Iterator<K>
   } // keysIterator()
 
@@ -266,6 +331,78 @@ public class ChainedHashTable<K, V>
         } // iterator()
       }; // new Iterable<K>
   } // keys()
+  
+  /**
+   * Get a bucket iterator
+   */
+  public Iterator<AssociationList<K, V>> bucketIterator()
+  {
+    return new Iterator<AssociationList<K, V>>()
+      {
+        // +--------+----------------------------------------------------------
+        // | Fields |
+        // +--------+
+        /**
+         * Current position of the iterator
+         */
+        int index = 0;
+
+        /**
+         * Number of iterations made so far
+         */
+        int numOfIterations = 0;
+
+        // +---------+----------------------------------------------------------
+        // | Methods |
+        // +---------+   
+        /**
+         * Determine whether there are any more elements to iterate
+         * 
+         * @pre none
+         * @post this doesn't change its position
+         * @return true if there are elements that weren't iterated yet
+         * @return false otherwise
+         */
+        public boolean hasNext()
+        {
+          return numOfIterations < size;
+        }// hasNext()
+
+        /**
+         * Return the next pair in the table and move the iterator
+         * 
+         * @pre 0 <= this.index <= OpenHashTable.this.capacity
+         * @post this.index++
+         * @return the next pair
+         * @throw NoSuchElementException
+         *      if this.hasNext == false, there is no next element 
+         */
+        public AssociationList<K, V> next()
+          throws NoSuchElementException
+        {
+          if (this.hasNext())
+            {
+              AssociationList<K, V> bucket;
+              // While the current element in the array is empty, move
+              while ((bucket = (AssociationList<K, V>) ChainedHashTable.this.buckets[index++]) == null);
+              // Completed an iteration, increment counter
+              this.numOfIterations++;
+              return bucket;
+            }// if there is a next element
+          else
+            throw new NoSuchElementException();
+        } // next()
+
+        /**
+         * Remove method is not supported
+         */
+        public void remove()
+          throws UnsupportedOperationException
+        {
+          throw new UnsupportedOperationException();
+        } // remove()
+      };// new Iterator<KVPair>()
+  }//pairsIterator()
 
   // +---------+---------------------------------------------------------
   // | Helpers |

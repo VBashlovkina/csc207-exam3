@@ -2,16 +2,12 @@ import java.io.PrintWriter;
 import java.util.Iterator;
 
 /**
- * Experiments for ChainedHashTable iterators
- * @author bashlovk
+ * A simple experiment with ChainedHashTable iterators
  *
  */
 public class CHTIteratorExpt
 {
 
-  /**
-   * @param args
-   */
   public static void main(String[] args)
   {
     PrintWriter pen = new PrintWriter(System.out, true);
@@ -19,13 +15,15 @@ public class CHTIteratorExpt
     cht.set('a', "apple");
     cht.set('b', "banana");
     cht.set('c', "cherry");
-    Iterator<String> it = cht.iterator();
-    for (int i = 0; i < 3; i++)
+    cht.set('d', "dun-dun-dun");
+    cht.dump(pen);
+    Iterator<String> itVals = cht.iterator();
+    Iterator<Character> itKeys = cht.keysIterator();
+    while (itVals.hasNext() || itKeys.hasNext())
       {
-        pen.println("Has next? " + it.hasNext());
-        pen.println("Next is " + it.next());
-      }// for
-    pen.println("Has next? " + it.hasNext());
+        pen.println("Next value is " + itVals.next() + ", next key is "
+                    + itKeys.next());
+      }// while
   }// main
 
 }// CHTIteratorExpt class

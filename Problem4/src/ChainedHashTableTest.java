@@ -12,7 +12,7 @@ public class ChainedHashTableTest
   /**
    * Our handy dandy factory.
    */
-  public DictionaryFactory<Character,String> ohtFactory = 
+  public DictionaryFactory<Character,String> chtFactory = 
     new DictionaryFactory<Character,String>()
       {
         public Dictionary<Character, String> build(int capacity)
@@ -28,7 +28,7 @@ public class ChainedHashTableTest
   public void randomTest()
     throws Exception
   {
-    DictionaryIteratorTests.randomTest(ohtFactory);
+    DictionaryIteratorTests.randomTest(chtFactory);
   } // test
 
 } // ChainedHashTableTest

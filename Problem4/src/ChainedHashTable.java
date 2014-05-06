@@ -9,10 +9,10 @@ import java.util.Random;
  * probing).
  *
  * @author Samuel A. Rebelsky
- * @author Your Name Here
+ * @author Vasilisa Bashlovkina
  */
 public class ChainedHashTable<K, V>
-    implements Dictionary<K,V>, Iterable<V>
+    implements Dictionary<K, V>, Iterable<V>
 {
   // +-------+-----------------------------------------------------------
   // | Notes |
@@ -127,12 +127,13 @@ public class ChainedHashTable<K, V>
   public V get(K key)
     throws Exception
   {
-    AssociationList<K,V> bucket = this.get(this.find(key));
+    AssociationList<K, V> bucket = this.get(this.find(key));
     if (bucket == null)
       {
         throw new Exception("Invalid key: " + key);
       } // if (bucket == null)
-    else // if (bucket != null)
+    else
+      // if (bucket != null)
       {
         return bucket.get(key);
       } // if (bucket != null)
@@ -164,7 +165,7 @@ public class ChainedHashTable<K, V>
    */
   public void remove(K key)
   {
-    AssociationList<K,V> bucket = this.get(this.find(key));
+    AssociationList<K, V> bucket = this.get(this.find(key));
     if (bucket != null)
       {
         bucket.remove(key);
@@ -186,10 +187,10 @@ public class ChainedHashTable<K, V>
     // Create a new association list, if necessary.
     if (buckets[index] == null)
       {
-        this.buckets[index]= new AssociationList<K,V>();
+        this.buckets[index] = new AssociationList<K, V>();
       } // if (buckets[index] == null)
     // Add the entry.
-    AssociationList<K,V> bucket = this.get(index);
+    AssociationList<K, V> bucket = this.get(index);
     int oldsize = bucket.size;
     bucket.set(key, value);
     // Update the size
@@ -213,7 +214,8 @@ public class ChainedHashTable<K, V>
         /**
          * The actual iterator doing all the work
          */
-        Iterator<AssociationList<K, V>> pairsIt = ChainedHashTable.this.bucketIterator();
+        Iterator<AssociationList<K, V>> bucketIt =
+            ChainedHashTable.this.bucketIterator();
 
         // +---------+----------------------------------------------------------
         // | Methods |
@@ -229,7 +231,7 @@ public class ChainedHashTable<K, V>
          */
         public boolean hasNext()
         {
-          return this.pairsIt.hasNext();
+          return this.bucketIt.hasNext();
         } // hasNext()
 
         /**
@@ -244,18 +246,19 @@ public class ChainedHashTable<K, V>
         public V next()
           throws NoSuchElementException
         {
-          return this.pairsIt.next().front.next.value;
+          return this.bucketIt.next().front.next.value;
         } // next()
 
         /**
          * Remove method is not supported
+         * @throws  UnsupportedOperationException
          */
         public void remove()
           throws UnsupportedOperationException
         {
           throw new UnsupportedOperationException();
         } // remove()
-        
+
       }; // new Iterator<V>
   } // iterator()
 
@@ -272,7 +275,8 @@ public class ChainedHashTable<K, V>
         /**
          * The actual iterator doing all the work
          */
-        Iterator<AssociationList<K, V>> pairsIt = ChainedHashTable.this.bucketIterator();
+        Iterator<AssociationList<K, V>> bucketIt =
+            ChainedHashTable.this.bucketIterator();
 
         // +---------+----------------------------------------------------------
         // | Methods |
@@ -288,7 +292,7 @@ public class ChainedHashTable<K, V>
          */
         public boolean hasNext()
         {
-          return this.pairsIt.hasNext();
+          return this.bucketIt.hasNext();
         } // hasNext()
 
         /**
@@ -303,18 +307,19 @@ public class ChainedHashTable<K, V>
         public K next()
           throws NoSuchElementException
         {
-          return this.pairsIt.next().front.next.key;
+          return this.bucketIt.next().front.next.key;
         } // next()
 
         /**
          * Remove method is not supported
+         * @throws  UnsupportedOperationException
          */
         public void remove()
           throws UnsupportedOperationException
         {
           throw new UnsupportedOperationException();
         } // remove()
-        
+
       }; // new Iterator<K>
   } // keysIterator()
 
@@ -331,7 +336,7 @@ public class ChainedHashTable<K, V>
         } // iterator()
       }; // new Iterable<K>
   } // keys()
-  
+
   /**
    * Get a bucket iterator
    */
@@ -365,7 +370,7 @@ public class ChainedHashTable<K, V>
          */
         public boolean hasNext()
         {
-          return numOfIterations < size;
+          return numOfIterations < ChainedHashTable.this.size;
         }// hasNext()
 
         /**
@@ -384,8 +389,10 @@ public class ChainedHashTable<K, V>
             {
               AssociationList<K, V> bucket;
               // While the current element in the array is empty, move
-              while ((bucket = (AssociationList<K, V>) ChainedHashTable.this.buckets[index++]) == null);
-              // Completed an iteration, increment counter
+              while ((bucket =
+                  (AssociationList<K, V>) ChainedHashTable.this.buckets[index++]) == null)
+                ;
+              // Completed an iteration - increment counter
               this.numOfIterations++;
               return bucket;
             }// if there is a next element
@@ -395,6 +402,7 @@ public class ChainedHashTable<K, V>
 
         /**
          * Remove method is not supported
+         * @throws  UnsupportedOperationException
          */
         public void remove()
           throws UnsupportedOperationException
@@ -402,7 +410,7 @@ public class ChainedHashTable<K, V>
           throw new UnsupportedOperationException();
         } // remove()
       };// new Iterator<KVPair>()
-  }//pairsIterator()
+  }//bucketIterator()
 
   // +---------+---------------------------------------------------------
   // | Helpers |
@@ -431,10 +439,10 @@ public class ChainedHashTable<K, V>
     // location in the new table.
     for (int i = 0; i < old.length; i++)
       {
-        AssociationList<K,V> bucket = (AssociationList<K,V>) old[i];
+        AssociationList<K, V> bucket = (AssociationList<K, V>) old[i];
         if (bucket != null)
           {
-            AssociationList<K,V>.Node current = bucket.front.next;
+            AssociationList<K, V>.Node current = bucket.front.next;
             while (current != null)
               {
                 this.set(current.key, current.value);
@@ -458,9 +466,9 @@ public class ChainedHashTable<K, V>
    * to association lists are all in one place.
    */
   @SuppressWarnings("unchecked")
-  AssociationList<K,V> get(int i)
+  AssociationList<K, V> get(int i)
   {
-    return (AssociationList<K,V>) buckets[i];
+    return (AssociationList<K, V>) buckets[i];
   } // get (int)
 
 } // class ChainedHashTable<K,V>

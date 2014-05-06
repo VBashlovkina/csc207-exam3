@@ -64,30 +64,30 @@ public class SystematicBSTRemoveTests
   /**
    * A quick test of removing from the empty tree.
    */
-  @Test
-  public void removeFromNull()
-  {
-    BST<Character, String> tree = buildTree("");
-    assertFalse(tree.containsKey('a'));
-    tree.remove('a');
-    assertFalse(tree.containsKey('a'));
-  } // removeFromNull
-
-  /**
-   * A quick test of removing from the singleton tree.
-   */
-  @Test
-  public void removeFromSingleton()
-  {
-    BST<Character, String> tree = buildTree("a");
-    assertTrue(tree.containsKey('a'));
-    tree.remove('a');
-    assertFalse(tree.containsKey('a'));
-  } // removeFromSingleton()
-
-  /**
-   * A quick test of removing a larger leaf (case 02, position 00)
-   */
+//  @Test
+//  public void removeFromNull()
+//  {
+//    BST<Character, String> tree = buildTree("");
+//    assertFalse(tree.containsKey('a'));
+//    tree.remove('a');
+//    assertFalse(tree.containsKey('a'));
+//  } // removeFromNull
+//
+//  /**
+//   * A quick test of removing from the singleton tree.
+//   */
+//  @Test
+//  public void removeFromSingleton()
+//  {
+//    BST<Character, String> tree = buildTree("a");
+//    assertTrue(tree.containsKey('a'));
+//    tree.remove('a');
+//    assertFalse(tree.containsKey('a'));
+//  } // removeFromSingleton()
+//
+//  /**
+//   * A quick test of removing a larger leaf (case 02, position 00)
+//   */
   @Test
   public void removeLeafLarger()
   {
@@ -95,7 +95,7 @@ public class SystematicBSTRemoveTests
     tree.remove('b');
     assertTrue(tree.containsKey('a'));
     assertFalse(tree.containsKey('b'));
-  } // removeLeaf
+  } // removeLeafLarger
 
   /**
    * A quick test of removing a smaller leaf (case 01, position 00)
@@ -107,202 +107,202 @@ public class SystematicBSTRemoveTests
     tree.remove('a');
     assertTrue(tree.containsKey('b'));
     assertFalse(tree.containsKey('a'));
-  } // removeLeaf
-
-  /**
-   * General tests
-   * 
-   * Cases 03-06 tested at position 00 - root of the tree
-   */
-  @Test
-  public void case03x00()
-  {
-    generalTest("phxd", 0);
-  }// case 03x00
-
-  @Test
-  public void case04x00()
-  {
-    generalTest("phxdltzbfj", 0);
-  }// case 04x00
-
-  @Test
-  public void case05x00()
-  {
-    generalTest("phxdltzbfjn", 0);
-  }// case 05x00
-
-  @Test
-  public void case06x00()
-  {
-    generalTest("phxdltzbfjnrvacegikm", 0);
-  }// case 06x00
-
-  /**
-   * Same cases, position of deleted element - left subtree (01)
-   */
-  @Test
-  public void case03x01()
-  {
-    generalTest("|phxd", 1);
-  }// case 03x01
-
-  @Test
-  public void case04x01()
-  {
-    generalTest("|phxdltzbfj", 1);
-  }// case 04x01
-
-  @Test
-  public void case05x01()
-  {
-    generalTest("|phxdltzbfjn", 1);
-  }// case 05x01
-
-  @Test
-  public void case06x01()
-  {
-    generalTest("|phxdltzbfjnrvacegikm", 1);
-  }// case 06x01
-
-  /**
-   * Same cases, position of deleted element - right subtree (02)
-   */
-  @Test
-  public void case03x02()
-  {
-    generalTest("0phxd", 1);
-  }// case 03x02
-
-  @Test
-  public void case04x012()
-  {
-    generalTest("0phxdltzbfj", 1);
-  }// case 04x02
-
-  @Test
-  public void case05x02()
-  {
-    generalTest("0phxdltzbfjn", 1);
-  }// case 05x02
-
-  @Test
-  public void case06x02()
-  {
-    generalTest("0phxdltzbfjnrvacegikm", 1);
-  }// case 06x02
-
-  /**
-   * Same cases, position of deleted element - at the root of
-   *  the left subtree of the left subtree (03)
-   */
-  @Test
-  public void case03x03()
-  {
-    generalTest("|{phxd", 2);
-  }// case 03x03
-
-  @Test
-  public void case04x03()
-  {
-    generalTest("|{phxdltzbfj", 2);
-  }// case 04x03
-
-  @Test
-  public void case05x03()
-  {
-    generalTest("|{phxdltzbfjn", 2);
-  }// case 05x03
-
-  @Test
-  public void case06x03()
-  {
-    generalTest("|{phxdltzbfjnrvacegikm", 2);
-  }// case 06x03
-
-  /**
-   * Same cases, position of deleted element - at the 
-   * root of the right subtree of the left subtree (04)
-   */
-  @Test
-  public void case03x04()
-  {
-    generalTest("|0phxd", 2);
-  }// case 03x04
-
-  @Test
-  public void case04x04()
-  {
-    generalTest("|0phxdltzbfj", 2);
-  }// case 04x04
-
-  @Test
-  public void case05x04()
-  {
-    generalTest("|0phxdltzbfjn", 2);
-  }// case 05x04
-
-  @Test
-  public void case06x04()
-  {
-    generalTest("|0phxdltzbfjnrvacegikm", 2);
-  }// case 06x04
-
-  /**
-   * Same cases, position of deleted element - 
-   * at the root of the left subtree of the right subtree. (05)
-   */
-  @Test
-  public void case03x05()
-  {
-    generalTest("0|phxd", 2);
-  }// case 03x05
-
-  @Test
-  public void case04x05()
-  {
-    generalTest("0|phxdltzbfj", 2);
-  }// case 04x05
-
-  @Test
-  public void case05x05()
-  {
-    generalTest("0|phxdltzbfjn", 2);
-  }// case 05x05
-
-  @Test
-  public void case06x05()
-  {
-    generalTest("0|phxdltzbfjnrvacegikm", 2);
-  }// case 06x06
-
-  /**
-   * Same cases, position of deleted element - 
-   * at the root of the right subtree of the right subtree (06)
-   */
-  @Test
-  public void case03x06()
-  {
-    generalTest("01phxd", 2);
-  }// case 03x06
-
-  @Test
-  public void case04x06()
-  {
-    generalTest("01phxdltzbfj", 2);
-  }// case 04x06
-
-  @Test
-  public void case05x06()
-  {
-    generalTest("01phxdltzbfjn", 2);
-  }// case 05x06
-
-  @Test
-  public void case06x06()
-  {
-    generalTest("01phxdltzbfjnrvacegikm", 2);
-  }// case 06x06
+  } // removeLeafSmaller
+//
+//  /**
+//   * General tests
+//   * 
+//   * Cases 03-06 tested at position 00 - root of the tree
+//   */
+//  @Test
+//  public void case03x00()
+//  {
+//    generalTest("phxd", 0);
+//  }// case 03x00
+//
+//  @Test
+//  public void case04x00()
+//  {
+//    generalTest("phxdltzbfj", 0);
+//  }// case 04x00
+//
+//  @Test
+//  public void case05x00()
+//  {
+//    generalTest("phxdltzbfjn", 0);
+//  }// case 05x00
+//
+//  @Test
+//  public void case06x00()
+//  {
+//    generalTest("phxdltzbfjnrvacegikm", 0);
+//  }// case 06x00
+//
+//  /**
+//   * Same cases, position of deleted element - left subtree (01)
+//   */
+//  @Test
+//  public void case03x01()
+//  {
+//    generalTest("|phxd", 1);
+//  }// case 03x01
+//
+//  @Test
+//  public void case04x01()
+//  {
+//    generalTest("|phxdltzbfj", 1);
+//  }// case 04x01
+//
+//  @Test
+//  public void case05x01()
+//  {
+//    generalTest("|phxdltzbfjn", 1);
+//  }// case 05x01
+//
+//  @Test
+//  public void case06x01()
+//  {
+//    generalTest("|phxdltzbfjnrvacegikm", 1);
+//  }// case 06x01
+//
+//  /**
+//   * Same cases, position of deleted element - right subtree (02)
+//   */
+//  @Test
+//  public void case03x02()
+//  {
+//    generalTest("0phxd", 1);
+//  }// case 03x02
+//
+//  @Test
+//  public void case04x02()
+//  {
+//    generalTest("0phxdltzbfj", 1);
+//  }// case 04x02
+//
+//  @Test
+//  public void case05x02()
+//  {
+//    generalTest("0phxdltzbfjn", 1);
+//  }// case 05x02
+//
+//  @Test
+//  public void case06x02()
+//  {
+//    generalTest("0phxdltzbfjnrvacegikm", 1);
+//  }// case 06x02
+//
+//  /**
+//   * Same cases, position of deleted element - at the root of
+//   *  the left subtree of the left subtree (03)
+//   */
+//  @Test
+//  public void case03x03()
+//  {
+//    generalTest("|{phxd", 2);
+//  }// case 03x03
+//
+//  @Test
+//  public void case04x03()
+//  {
+//    generalTest("|{phxdltzbfj", 2);
+//  }// case 04x03
+//
+//  @Test
+//  public void case05x03()
+//  {
+//    generalTest("|{phxdltzbfjn", 2);
+//  }// case 05x03
+//
+//  @Test
+//  public void case06x03()
+//  {
+//    generalTest("|{phxdltzbfjnrvacegikm", 2);
+//  }// case 06x03
+//
+//  /**
+//   * Same cases, position of deleted element - at the 
+//   * root of the right subtree of the left subtree (04)
+//   */
+//  @Test
+//  public void case03x04()
+//  {
+//    generalTest("|0phxd", 2);
+//  }// case 03x04
+//
+//  @Test
+//  public void case04x04()
+//  {
+//    generalTest("|0phxdltzbfj", 2);
+//  }// case 04x04
+//
+//  @Test
+//  public void case05x04()
+//  {
+//    generalTest("|0phxdltzbfjn", 2);
+//  }// case 05x04
+//
+//  @Test
+//  public void case06x04()
+//  {
+//    generalTest("|0phxdltzbfjnrvacegikm", 2);
+//  }// case 06x04
+//
+//  /**
+//   * Same cases, position of deleted element - 
+//   * at the root of the left subtree of the right subtree. (05)
+//   */
+//  @Test
+//  public void case03x05()
+//  {
+//    generalTest("0|phxd", 2);
+//  }// case 03x05
+//
+//  @Test
+//  public void case04x05()
+//  {
+//    generalTest("0|phxdltzbfj", 2);
+//  }// case 04x05
+//
+//  @Test
+//  public void case05x05()
+//  {
+//    generalTest("0|phxdltzbfjn", 2);
+//  }// case 05x05
+//
+//  @Test
+//  public void case06x05()
+//  {
+//    generalTest("0|phxdltzbfjnrvacegikm", 2);
+//  }// case 06x06
+//
+//  /**
+//   * Same cases, position of deleted element - 
+//   * at the root of the right subtree of the right subtree (06)
+//   */
+//  @Test
+//  public void case03x06()
+//  {
+//    generalTest("01phxd", 2);
+//  }// case 03x06
+//
+//  @Test
+//  public void case04x06()
+//  {
+//    generalTest("01phxdltzbfj", 2);
+//  }// case 04x06
+//
+//  @Test
+//  public void case05x06()
+//  {
+//    generalTest("01phxdltzbfjn", 2);
+//  }// case 05x06
+//
+//  @Test
+//  public void case06x06()
+//  {
+//    generalTest("01phxdltzbfjnrvacegikm", 2);
+//  }// case 06x06
   
   
    // +-----------+-------------------------------------------------------

@@ -37,9 +37,11 @@ public class NewExpt
   public static void main(String[] args)
   {
     PrintWriter pen = new PrintWriter(System.out, true);
-    BST<Character, String> tree = buildTree("01phxdltzbfjnrvacegikmoqsuw");
+    BST<Character, String> tree = buildTree("ab");
     tree.dump(pen);
-    pen.println("a < 0? " + (new String ("a")).compareTo("0"));
-    pen.println("z < !? " + (new String ("z")).compareTo("|"));
+    tree.remove('b');
+    tree.dump(pen);
+    pen.println("contains a? " + tree.containsKey('a'));
+    pen.println("contains b? " + tree.containsKey('b'));
   }
 }

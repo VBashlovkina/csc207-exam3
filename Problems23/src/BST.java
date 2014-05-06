@@ -281,17 +281,56 @@ public class BST<K, V>
       return tree;
     // Determine the relationship of the key to the root of the subtree.
     int tmp = order.compare(key, tree.key);
+    BSTNode tempNode;
     // If we've found the item to remove, ...
     if (tmp == 0)
       {
+        // I think it should be iterative here
+       // Anyway, base cases:
+        if (tree.larger == null && tree.smaller == null)
+          {
+            tree = null;
+          }// if it's a leaf
+        else if (tree.larger == null)
+          {
+            //Temporarily store the smaller node
+            tempNode = tree.smaller;
+            // Copy the key and value from the smaller node
+            tree.key = tempNode.key;
+            tree.value = tempNode.value;
+            // Reassign smaller and larger to that of the smaller child
+            tree.larger = tempNode.larger;
+            tree.smaller = tempNode.smaller;
+
+
+          }// if no right child
+        else if (tree.smaller == null)
+          {
+            System.out.println("Larger subtree with key " + tree.larger.key.toString()
+                               + " val " + tree.larger.value.toString());
+            //Temporarily store the smaller node
+            tempNode = tree.larger;
+            // Copy the key and value from the larger node
+            tree.key = tempNode.key;
+            tree.value = tempNode.value;
+            // Reassign smaller and larger to that of the larger child
+            tree.smaller = tempNode.smaller;
+            tree.larger = tempNode.larger;
+
+          }// if no left child
         // STUB.  
-        return null;
+        return tree;
       } // if we've found the item to remove
+    else if (tmp < 0)
+      {
+        remove(tree.smaller, key);
+        return tree;
+      } // if key is smaller than current root, go left
     else 
       {
-        // STUB.
+        remove(tree.larger, key);
         return tree;
-      } // if (tmp != 0)
+      }// if key is greater than current root, go right
   } // remove(BSTNode, K)
 
   // +---------------+---------------------------------------------------

@@ -37,11 +37,11 @@ public class NewExpt
   public static void main(String[] args)
   {
     PrintWriter pen = new PrintWriter(System.out, true);
-    BST<Character, String> tree = buildTree("ba");
+    BST<Character, String> tree = buildTree("phxdltzbfj");
     tree.dump(pen);
-    tree.remove('b');
+    tree.remove('p');
     tree.dump(pen);
-    pen.println("contains a? " + tree.containsKey('a'));
+    pen.println("contains p? " + tree.containsKey('p'));
     pen.println("contains b? " + tree.containsKey('b'));
     pen.println("contains c? " + tree.containsKey('c'));
   }// main

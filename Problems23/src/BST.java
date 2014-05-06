@@ -273,6 +273,9 @@ public class BST<K, V>
   /**
    * Remove the element with the specified key, assuming that the
    * element appears in the tree.  Returns the modified tree.
+   * @pre tree.containsKey(key) is true
+   * @post tree.containsKey(key) is false
+   * @returns a modified tree
    */
   BSTNode remove(BSTNode tree, K key)
   {
@@ -281,85 +284,57 @@ public class BST<K, V>
       return tree;
     // Determine the relationship of the key to the root of the subtree.
     int tmp = order.compare(key, tree.key);
-    //BSTNode tempNode;
     // If we've found the item to remove, ...
     if (tmp == 0)
       {
-        // I think it should be iterative here
-        // Anyway, base cases:
+        // Base cases:
         if (tree.larger == null && tree.smaller == null)
           {
             tree = null;
           }// if it's a leaf
         else if (tree.larger == null)
           {
-
-            // It has a left (smaller) subtree
-            System.err.println("Smaller subtree with key "
-                               + tree.smaller.key.toString() + " val "
-                               + tree.smaller.value.toString());
-            // tree should be replaced by its smaller subtree
+            // Skip tree and go directly to its smaller child
             tree = tree.smaller;
-            // And we're done (do we need to return?)
-
-            //            //Temporarily store the smaller node
-            //            tempNode = tree.smaller;
-            //            // Copy the key and value from the smaller node
-            //            tree.key = tempNode.key;
-            //            tree.value = tempNode.value;
-            //            // Reassign smaller and larger to that of the smaller child
-            //            tree.larger = tempNode.larger;
-            //            tree.smaller = tempNode.smaller;
-
           }// if no right child
         else if (tree.smaller == null)
           {
-            // It has a right (larger) subtree
-            System.err.println("Larger subtree with key "
-                               + tree.larger.key.toString() + " val "
-                               + tree.larger.value.toString());
-            // Skip it
+         // Skip tree and go directly to its  larger child
             tree = tree.larger;
           }// if no left child
         else
           { // It has both children
-            System.err.println("Both children:");
-            System.err.println("Smaller subtree with key "
-                               + tree.smaller.key.toString() + " val "
-                               + tree.smaller.value.toString());
-            System.err.println("Larger subtree with key "
-                               + tree.larger.key.toString() + " val "
-                               + tree.larger.value.toString());
-            // Here it's iterative
             BSTNode parent = tree;
             BSTNode largestChild = tree.smaller;
-            // Flag that is reset if it the while loop runs
+            // Flag that is reset if the while loop runs
             boolean firstGeneration = true;
-            // Find the largest element in the left subtree and its parent
             
+            // Find the largest element in the left subtree and its parent
             while (largestChild.larger != null)
               {
                 // Reset the flag
-                if (firstGeneration)
-                  firstGeneration = false;
+                firstGeneration = false;
                 // The parent of the larger node is the current largestChild
                 parent = largestChild;
                 // The new largestChild is the larger node
                 largestChild = largestChild.larger;
               }// while looking for largest element in the left subtree
 
-            
+            // There are two cases:
+            // If the loop didn't run (i.e. the largest child is tree.smaller)
+            // then we should reassign the parent's link to the smaller child
+            // Otherwise we reassign the paren't link to the largest child.
             if (!firstGeneration)
               {
                 // Skip the parent's link to the larger child
                 parent.larger = largestChild.smaller;
-                parent.smaller = null;
               }// if the loop ran
-            else 
+            else
               {
                 // Skip the parent's link to the smaller child
                 parent.smaller = largestChild.smaller;
               }// else the loop didn't run, it's the first generation child
+            
             // Reassign the children of the largestChild
             largestChild.larger = tree.larger;
             largestChild.smaller = tree.smaller;
@@ -370,12 +345,13 @@ public class BST<K, V>
       } // if we've found the item to remove
     else if (tmp < 0)
       {
-        remove(tree.smaller, key);
-        return tree;
+        tree.smaller = remove(tree.smaller, key);
+        return tree.larger; // COMMENT TO FIX
+        //return tree; UNCOMMENT TO FIX
       } // if key is smaller than current root, go left
     else
       {
-        remove(tree.larger, key);
+        tree.larger = remove(tree.larger, key);
         return tree;
       }// if key is greater than current root, go right
   } // remove(BSTNode, K)

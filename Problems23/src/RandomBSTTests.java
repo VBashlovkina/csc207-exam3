@@ -127,7 +127,7 @@ public class RandomBSTTests
               {
                 String value = words[rand.nextInt(wordslen)];
                 char key = value.charAt(0);
-                operation = "set(" + key + "," + value + ")";
+                operation = "set('" + key + "'," + '"' + value + '\\' + '"' + ")";
                 ops.add(operation);
                 activeKeys.add(key);
                 dict.set(key, value);
@@ -141,7 +141,7 @@ public class RandomBSTTests
                 // Does it contain the right value?
                 if (!dict.get(key).equals(value))
                   {
-                    reportError(dict, ops, "dict[" + key + "] != " + value);
+                    reportError(dict, ops, "dict['" + key + "'] != " + value);
                   } // if the key has the wrong the value
               } // add case
 
@@ -172,7 +172,7 @@ public class RandomBSTTests
   {
     System.err.println(ops);
     dict.dump(new PrintWriter(System.err, true));
-    fail(message);
+    
     System.out.println("The code to paste into BSTTrace:");
     Iterator<String> it = ops.iterator();
     String oper;
@@ -191,8 +191,9 @@ public class RandomBSTTests
           }// else adding
         System.out.println("dict." + oper + ";");
         System.out.println("dict.dump(pen);");
+       
       }// while has next
-    
+    fail(message);
   } // reportError
 
 } // class RandomBSTRemoveTests

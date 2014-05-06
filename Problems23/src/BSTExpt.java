@@ -64,6 +64,7 @@ public class BSTExpt
     // A quick printout for fun
     pen.println("After setting elements");
     iterate(pen, dict);
+    dict.dump(pen);
 
     // Delete all of the elements
     for (String value : values)

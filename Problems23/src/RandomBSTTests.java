@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -126,7 +127,7 @@ public class RandomBSTTests
               {
                 String value = words[rand.nextInt(wordslen)];
                 char key = value.charAt(0);
-                operation = "add(" + key + "," + value + ")";
+                operation = "set(" + key + "," + value + ")";
                 ops.add(operation);
                 activeKeys.add(key);
                 dict.set(key, value);
@@ -172,6 +173,26 @@ public class RandomBSTTests
     System.err.println(ops);
     dict.dump(new PrintWriter(System.err, true));
     fail(message);
+    System.out.println("The code to paste into BSTTrace:");
+    Iterator<String> it = ops.iterator();
+    String oper;
+    while (it.hasNext())
+      {
+        oper = it.next();
+        if (oper.charAt(0) == 'r')
+          {
+            System.out.println("pen.println(\"removing " 
+          + oper.charAt(7) + "\");");
+          }// if remove
+        else 
+          {
+            System.out.println("pen.println(\"adding " 
+          + oper.substring(6,oper.length()-1) + "\");");
+          }// else adding
+        System.out.println("dict." + oper + ";");
+        System.out.println("dict.dump(pen);");
+      }// while has next
+    
   } // reportError
 
 } // class RandomBSTRemoveTests

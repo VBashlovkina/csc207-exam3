@@ -47,9 +47,9 @@ public class SystematicBSTRemoveTests
      
    */
 
-  // +--------+----------------------------------------------------------
-  // | Fields |
-  // +--------+
+  // +-----------+----------------------------------------------------------
+  // | Constants |
+  // +-----------+
   /**
    * A string that gives a nice acceptably balanced tree.
    * I relied on the tree produced by it in making the test cases
@@ -427,12 +427,12 @@ public class SystematicBSTRemoveTests
    */
   public static void generalTest(String str, int index)
   {
-    // Build a tree
-    BST<Character, String> tree = buildTree(str);
+    // Build a tree 
+    BST<Character, String> original = buildTree(str);
     // Find the char to delete and remove it
-    tree.remove(str.charAt(index));
+    original.remove(str.charAt(index));
     // Check if all chars except for the deleted one are present
-    checkSkipChar(tree, str, index);
+    checkSkipChar(original, str, index);
   }// generalTest
 
   /**
@@ -481,6 +481,7 @@ public class SystematicBSTRemoveTests
 
   /**
    * Determine if a tree contains all of the characters in a given string 
+   * (based on the original method check (BST<Character,String>, String) by Sam)
    * but doesn't contain str.charAt(index).
    * @pre 0 => index > str.length
    * @param str
@@ -491,7 +492,7 @@ public class SystematicBSTRemoveTests
   public static void checkSkipChar(BST<Character, String> tree, String str,
                                    int index)
   {
-    // Check all of the characters in order
+    // Check all of the characters in order but skip over the deleted char
     int len = str.length();
     for (int i = 0; i < len; i++)
       {
@@ -500,11 +501,13 @@ public class SystematicBSTRemoveTests
           {
             if (!tree.containsKey(c))
               {
-                fail("Tree does not contain " + c);
+                fail("Tree built from string " + str + " does not contain " + c);
               } // if (! tree.containsKey(c))
           }// if not the index of the deleted character
         else
-          assertFalse(tree.containsKey(c));
+          assertFalse("Tree built from string " + str + " contains " + c
+                          + ", which was supposed to deleted.",
+                      tree.containsKey(c));
       } // for
   } // check(BST<Character,String>, String)
 

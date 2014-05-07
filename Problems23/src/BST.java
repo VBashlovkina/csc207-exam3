@@ -273,6 +273,7 @@ public class BST<K, V>
   /**
    * Remove the element with the specified key, assuming that the
    * element appears in the tree.  Returns the modified tree.
+   * 
    * @pre tree.containsKey(key) is true
    * @post tree.containsKey(key) is false
    * @returns a modified tree
@@ -299,7 +300,7 @@ public class BST<K, V>
           }// if no right child
         else if (tree.smaller == null)
           {
-         // Skip tree and go directly to its  larger child
+            // Skip tree and go directly to its  larger child
             tree = tree.larger;
           }// if no left child
         else
@@ -308,7 +309,7 @@ public class BST<K, V>
             BSTNode largestChild = tree.smaller;
             // Flag that is reset if the while loop runs
             boolean firstGeneration = true;
-            
+
             // Find the largest element in the left subtree and its parent
             while (largestChild.larger != null)
               {
@@ -334,7 +335,7 @@ public class BST<K, V>
                 // Skip the parent's link to the smaller child
                 parent.smaller = largestChild.smaller;
               }// else the loop didn't run, it's the first generation child
-            
+
             // Reassign the children of the largestChild
             largestChild.larger = tree.larger;
             largestChild.smaller = tree.smaller;
@@ -346,7 +347,8 @@ public class BST<K, V>
     else if (tmp < 0)
       {
         tree.smaller = remove(tree.smaller, key);
-        return tree; 
+        return tree;
+
       } // if key is smaller than current root, go left
     else
       {

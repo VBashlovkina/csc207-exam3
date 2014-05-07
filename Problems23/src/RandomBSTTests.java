@@ -127,7 +127,7 @@ public class RandomBSTTests
               {
                 String value = words[rand.nextInt(wordslen)];
                 char key = value.charAt(0);
-                operation = "set(\"" + key + "\",\"" + value + "\")";
+                operation = "set(\"" + key + "\", \"" + value + "\")";
                 ops.add(operation);
                 activeKeys.add(key);
                 dict.set(key, value);
@@ -135,8 +135,7 @@ public class RandomBSTTests
                 if (!dict.containsKey(key))
                   {
                     reportError(dict, ops,
-                                "After insertion, dictionary lacks key "
-                                    + key);
+                                "After insertion, dictionary lacks key " + key);
                   } // if the key is not there
                 // Does it contain the right value?
                 if (!dict.get(key).equals(value))
@@ -172,7 +171,7 @@ public class RandomBSTTests
   {
     System.err.println(ops);
     dict.dump(new PrintWriter(System.err, true));
-    
+
     System.err.println("The code to paste into BSTTrace:");
     Iterator<String> it = ops.iterator();
     String oper;
@@ -181,16 +180,17 @@ public class RandomBSTTests
         oper = it.next();
         if (oper.charAt(0) == 'r')
           {
-            System.err.println("pen.println(\"removing " + oper.charAt(8) + "\");");
+            System.err.println("pen.println(\"removing " + oper.charAt(8)
+                               + "\");");
           }// if remove
-        else 
+        else
           {
-            System.err.println("pen.println(\"adding " 
-          + oper.substring(9,oper.length()-2) + "\");");
+            System.err.println("pen.println(\"adding "
+                               + oper.substring(10, oper.length() - 2) + "\");");
           }// else adding
         System.err.println("dict." + oper + ";");
         System.err.println("dict.dump(pen);");
-       
+
       }// while has next
     fail(message);
   } // reportError

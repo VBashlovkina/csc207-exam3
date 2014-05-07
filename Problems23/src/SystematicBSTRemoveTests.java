@@ -86,7 +86,7 @@ public class SystematicBSTRemoveTests
   } // removeFromSingleton()
 
   /**
-   * A quick test of removing a larger leaf (case 02, position 00)
+   * A quick test of removing a larger leaf (case 00, position 02)
    */
   @Test
   public void removeLeafLarger()
@@ -98,7 +98,7 @@ public class SystematicBSTRemoveTests
   } // removeLeafLarger
 
   /**
-   * A quick test of removing a smaller leaf (case 01, position 00)
+   * A quick test of removing a smaller leaf (case 00, position 02)
    */
   @Test
   public void removeLeafSmaller()
@@ -112,23 +112,26 @@ public class SystematicBSTRemoveTests
   /**
    * General tests
    * 
-   * Cases 03-06 tested at position 00 - root of the tree
+   * Cases 00-06 tested at position 00 - root of the tree
    */
   @Test
   public void case01x00()
   {
     generalTest("ph", 0);
   }// case 01x00
+
   @Test
   public void case02x00()
   {
     generalTest("px", 0);
   }// case 02x00
+
   @Test
   public void case03x00()
   {
     generalTest("phxd", 0);
   }// case 03x00
+
   @Test
   public void case04x00()
   {
@@ -155,11 +158,13 @@ public class SystematicBSTRemoveTests
   {
     generalTest("|ph", 1);
   }// case 01x01
+
   @Test
   public void case02x01()
   {
     generalTest("|px", 1);
   }// case 02x01
+
   @Test
   public void case03x01()
   {
@@ -192,11 +197,13 @@ public class SystematicBSTRemoveTests
   {
     generalTest("0ph", 1);
   }// case 01x02
+
   @Test
   public void case02x02()
   {
     generalTest("0px", 1);
   }// case 02x02
+
   @Test
   public void case03x02()
   {
@@ -226,15 +233,23 @@ public class SystematicBSTRemoveTests
    *  the left subtree of the left subtree (03)
    */
   @Test
+  public void case00x03()
+  {
+    generalTest("|{p", 2);
+  }// case 01x03
+
+  @Test
   public void case01x03()
   {
     generalTest("|{ph", 2);
   }// case 01x03
+
   @Test
   public void case02x03()
   {
     generalTest("|{px", 2);
   }// case 02x03
+
   @Test
   public void case03x03()
   {
@@ -264,15 +279,23 @@ public class SystematicBSTRemoveTests
    * root of the right subtree of the left subtree (04)
    */
   @Test
+  public void case00x04()
+  {
+    generalTest("|0p", 2);
+  }// case 00x04
+
+  @Test
   public void case01x04()
   {
     generalTest("|0ph", 2);
   }// case 01x04
+
   @Test
   public void case02x04()
   {
     generalTest("|0px", 2);
   }// case 02x04
+
   @Test
   public void case03x04()
   {
@@ -302,15 +325,23 @@ public class SystematicBSTRemoveTests
    * at the root of the left subtree of the right subtree. (05)
    */
   @Test
+  public void case00x05()
+  {
+    generalTest("0|p", 2);
+  }// case 00x05
+
+  @Test
   public void case01x05()
   {
     generalTest("0|ph", 2);
   }// case 01x05
+
   @Test
   public void case02x05()
   {
     generalTest("0|px", 2);
   }// case 02x05
+
   @Test
   public void case03x05()
   {
@@ -340,15 +371,23 @@ public class SystematicBSTRemoveTests
    * at the root of the right subtree of the right subtree (06)
    */
   @Test
+  public void case00x06()
+  {
+    generalTest("01p", 2);
+  }// case 00x06
+
+  @Test
   public void case01x06()
   {
     generalTest("01ph", 2);
   }// case 01x06
+
   @Test
   public void case02x06()
   {
     generalTest("01px", 2);
   }// case 02x06
+
   @Test
   public void case03x06()
   {
@@ -372,11 +411,10 @@ public class SystematicBSTRemoveTests
   {
     generalTest("01phxdltzbfjnrvacegikm", 2);
   }// case 06x06
-  
-  
-   // +-----------+-------------------------------------------------------
-   // | Utilities |
-   // +-----------+
+
+  // +-----------+-------------------------------------------------------
+  // | Utilities |
+  // +-----------+
 
   /**
    * Determine whether the character at a given position was successfully deleted

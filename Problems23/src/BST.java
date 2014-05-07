@@ -346,8 +346,7 @@ public class BST<K, V>
     else if (tmp < 0)
       {
         tree.smaller = remove(tree.smaller, key);
-        return tree.larger; // COMMENT TO FIX
-        //return tree; UNCOMMENT TO FIX
+        return tree; 
       } // if key is smaller than current root, go left
     else
       {

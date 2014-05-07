@@ -109,7 +109,7 @@ public class RandomBSTTests
                 // Get the key
                 char key = keys.charAt(rand.nextInt(keyslen));
                 // Note that we're removing
-                operation = "remove(" + key + ")";
+                operation = "remove(\"" + key + "\")";
                 ops.add(operation);
                 // Do the actual work
                 dict.remove(key);
@@ -127,7 +127,7 @@ public class RandomBSTTests
               {
                 String value = words[rand.nextInt(wordslen)];
                 char key = value.charAt(0);
-                operation = "set('" + key + "'," + '"' + value + '\\' + '"' + ")";
+                operation = "set(\"" + key + "\",\"" + value + "\")";
                 ops.add(operation);
                 activeKeys.add(key);
                 dict.set(key, value);
@@ -141,7 +141,7 @@ public class RandomBSTTests
                 // Does it contain the right value?
                 if (!dict.get(key).equals(value))
                   {
-                    reportError(dict, ops, "dict['" + key + "'] != " + value);
+                    reportError(dict, ops, "dict[" + key + "] != " + value);
                   } // if the key has the wrong the value
               } // add case
 
@@ -173,7 +173,7 @@ public class RandomBSTTests
     System.err.println(ops);
     dict.dump(new PrintWriter(System.err, true));
     
-    System.out.println("The code to paste into BSTTrace:");
+    System.err.println("The code to paste into BSTTrace:");
     Iterator<String> it = ops.iterator();
     String oper;
     while (it.hasNext())
@@ -181,16 +181,15 @@ public class RandomBSTTests
         oper = it.next();
         if (oper.charAt(0) == 'r')
           {
-            System.out.println("pen.println(\"removing " 
-          + oper.charAt(7) + "\");");
+            System.err.println("pen.println(\"removing " + oper.charAt(8) + "\");");
           }// if remove
         else 
           {
-            System.out.println("pen.println(\"adding " 
-          + oper.substring(6,oper.length()-1) + "\");");
+            System.err.println("pen.println(\"adding " 
+          + oper.substring(9,oper.length()-2) + "\");");
           }// else adding
-        System.out.println("dict." + oper + ";");
-        System.out.println("dict.dump(pen);");
+        System.err.println("dict." + oper + ";");
+        System.err.println("dict.dump(pen);");
        
       }// while has next
     fail(message);

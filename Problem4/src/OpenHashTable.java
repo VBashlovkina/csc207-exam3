@@ -9,7 +9,7 @@ import java.util.Random;
  * probing).
  *
  * @author Samuel A. Rebelsky
- * @author Your Name Here
+ * @author Vasilisa Bashlovkina
  */
 public class OpenHashTable<K, V>
     implements Dictionary<K, V>, Iterable<V>
@@ -338,6 +338,79 @@ public class OpenHashTable<K, V>
   } // keysIterator()
 
   /**
+   * Get an iterator for the KVpairs
+   */
+  public Iterator<KVPair> pairsIterator()
+  {
+    return new Iterator<KVPair>()
+      {
+        // +--------+----------------------------------------------------------
+        // | Fields |
+        // +--------+
+        /**
+         * Current position of the iterator
+         */
+        int index = 0;
+
+        /**
+         * Number of iterations made so far
+         */
+        int numOfIterations = 0;
+
+        // +---------+----------------------------------------------------------
+        // | Methods |
+        // +---------+   
+        /**
+         * Determine whether there are any more elements to iterate
+         * 
+         * @pre none
+         * @post this doesn't change its position
+         * @return true if there are elements that weren't iterated yet
+         * @return false otherwise
+         */
+        public boolean hasNext()
+        {
+          return numOfIterations < size;
+        }// hasNext()
+
+        /**
+         * Return the next pair in the table and move the iterator
+         * 
+         * @pre 0 <= this.index <= OpenHashTable.this.capacity
+         * @post this.index++
+         * @return the next pair
+         * @throw NoSuchElementException
+         *      if this.hasNext == false, there is no next element 
+         */
+        public KVPair next()
+          throws NoSuchElementException
+        {
+          if (this.hasNext())
+            {
+              KVPair pair;
+              // While the current element in the array is empty, move
+              while ((pair = (KVPair) OpenHashTable.this.pairs[index++]) == null)
+                ;
+              // Completed an iteration, increment counter
+              this.numOfIterations++;
+              return pair;
+            }// if there is a next element
+          else
+            throw new NoSuchElementException();
+        } // next()
+
+        /**
+         * Remove method is not supported
+         */
+        public void remove()
+          throws UnsupportedOperationException
+        {
+          throw new UnsupportedOperationException();
+        } // remove()
+      };// new Iterator<KVPair>()
+  }//pairsIterator()
+
+  /**
    * Get an Iterable for the keys.  See explanation in Dictionary.java.
    */
   public Iterable<K> keys()
@@ -406,78 +479,6 @@ public class OpenHashTable<K, V>
       } // while
     return index;
   } // find(K)
-
-  /**
-   * Get an iterator for the KVpairs
-   */
-  public Iterator<KVPair> pairsIterator()
-  {
-    return new Iterator<KVPair>()
-      {
-        // +--------+----------------------------------------------------------
-        // | Fields |
-        // +--------+
-        /**
-         * Current position of the iterator
-         */
-        int index = 0;
-
-        /**
-         * Number of iterations made so far
-         */
-        int numOfIterations = 0;
-
-        // +---------+----------------------------------------------------------
-        // | Methods |
-        // +---------+   
-        /**
-         * Determine whether there are any more elements to iterate
-         * 
-         * @pre none
-         * @post this doesn't change its position
-         * @return true if there are elements that weren't iterated yet
-         * @return false otherwise
-         */
-        public boolean hasNext()
-        {
-          return numOfIterations < size;
-        }// hasNext()
-
-        /**
-         * Return the next pair in the table and move the iterator
-         * 
-         * @pre 0 <= this.index <= OpenHashTable.this.capacity
-         * @post this.index++
-         * @return the next pair
-         * @throw NoSuchElementException
-         *      if this.hasNext == false, there is no next element 
-         */
-        public KVPair next()
-          throws NoSuchElementException
-        {
-          if (this.hasNext())
-            {
-              KVPair pair;
-              // While the current element in the array is empty, move
-              while ((pair = (KVPair) OpenHashTable.this.pairs[index++]) == null);
-              // Completed an iteration, increment counter
-              this.numOfIterations++;
-              return pair;
-            }// if there is a next element
-          else
-            throw new NoSuchElementException();
-        } // next()
-
-        /**
-         * Remove method is not supported
-         */
-        public void remove()
-          throws UnsupportedOperationException
-        {
-          throw new UnsupportedOperationException();
-        } // remove()
-      };// new Iterator<KVPair>()
-  }//pairsIterator()
 
   /**
    * Get the ith element of the table.  Included mostly so that the

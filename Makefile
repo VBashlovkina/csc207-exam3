@@ -5,7 +5,7 @@
 # +----------+
 
 # The user.	Please replace with your username.
-USER=rebelsky
+USER=bashlovk
 
 # The files that go in the tarball.	If you add things to the repo,
 # you should update this.

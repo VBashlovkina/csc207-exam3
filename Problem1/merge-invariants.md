@@ -84,7 +84,7 @@ e. Loop Termination
 
 _Give a loop termination condition._
 
-The loop signature would be `while (curM < m.length)` so it will terminate
+The loop should terminate when m is filled, more formally, 
 when curM == m.length.
 
 f. Additional Work
